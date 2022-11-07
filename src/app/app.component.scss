@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  height: 100vh;
+}
+
+.wrapper {
+  height: 100%;
+  overflow: hidden;
+
+  .theme_dark {
+    background: transparentize(#20232D, 0.7);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+
+    .wrapper__preloader {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+    }
+  }
+}

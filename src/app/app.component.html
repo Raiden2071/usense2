@@ -1,0 +1,9 @@
+<app-header></app-header>
+<div class="wrapper d-flex align-items-center justify-content-center">
+  <router-outlet></router-outlet>
+  <div class="theme_dark" *ngIf="appService.preloader">
+    <div class="wrapper__preloader">
+      <div class="spinner-border text-info"></div>
+    </div>
+  </div>
+</div>

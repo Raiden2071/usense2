@@ -1,0 +1,15 @@
+:host {
+  position: fixed;
+  display: block;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.header {
+  padding: 12px;
+  border-bottom: 1px solid grey;
+  background-color: #4963d0;
+}
+
