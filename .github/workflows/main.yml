@@ -22,8 +22,8 @@ jobs:
       - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
       - name: Sample Azure action
-        with: # Set Azure credentials secret as an input
-          credentials: ${{ secrets.key }}
+        # with: # Set Azure credentials secret as an input
+        #   credentials: ${{ secrets.key }}
         env: # Or as an environment variable
           credentials: ${{ secrets.key }}
       - run: echo $credentials
