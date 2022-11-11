@@ -21,6 +21,11 @@ jobs:
       - run: mkdir "$HOME/.ssh"
       - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
+      - name: Retrieve the secret and decode it to a file
+        env:
+          CERTIFICATE_BASE64: ${{ secrets.key }}
+        run: |
+          echo $CERTIFICATE_BASE64 | base64 --decode > cert.der
       - name: install modules
         run: npm install
       - name: build project
