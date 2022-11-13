@@ -24,7 +24,11 @@ jobs:
       # # Setup key
       # - run: set -eu
       # - run: mkdir "$HOME/.ssh"
-      - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
+      - run: echo "${{ secrets.key }}"
+    rules:
+      - if: '"${{ secrets.check }}" == "check"'
+        when: always
+        - run: echo "it's true"
       # - run: chmod 600 "$HOME/.ssh/key"
       # Build
       - run: npm install
