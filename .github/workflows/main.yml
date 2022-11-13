@@ -18,19 +18,18 @@ jobs:
       - name: Staring Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         env:
-          credentials: ${{ secrets.key }}
+          credentials: ${{ secrets.SSH_KEY }}
         with:
           node-version: ${{ matrix.node-version }}
       # # Setup key
       # - run: set -eu
       # - run: mkdir "$HOME/.ssh"
-      - run: echo "${{ secrets.key }}"
-      - run: echo "$credentials"
+      - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
       # - run: chmod 600 "$HOME/.ssh/key"
       # Build
       - run: npm install
       - run: npm run build
       # Deploy
-      - run: cd dist && rsync -e "ssh -i $credentials -o StrictHostKeyChecking=no" --archive --compress --delete . slava@95.216.141.232:/home/slava/stages/MM/Admin
+      # - run: cd dist && rsync -e "ssh -i $credentials -o StrictHostKeyChecking=no" --archive --compress --delete . slava@95.216.141.232:/home/slava/stages/MM/Admin
       # # Restart
       # - run: pm2 restart
