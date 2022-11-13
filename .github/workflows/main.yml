@@ -1,35 +1,36 @@
-name: GitHub Actions Demo
+name: Deploy
+
 on:
   push:
-    branches: [ master ]
+    branches:
+      - develop
   pull_request:
-    branches: [ master ]
+    types: [opened, reopened]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-varsion: [ 17.x ]
+        node-version: [ 17.x ]
     steps:
       - uses: actions/checkout@v3
       - name: Staring Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
+        env:
+          credentials: ${{ secrets.key }}
         with:
           node-version: ${{ matrix.node-version }}
-      # Setup key
-      - run: set -eu
-      - run: mkdir "$HOME/.ssh"
-      - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
-      - run: chmod 600 "$HOME/.ssh/key"
-      - name: Sample Azure action
-        # with: # Set Azure credentials secret as an input
-        #   credentials: ${{ secrets.key }}
-        # 
-        # env: # Or as an environment variable
-        #   credentials: ${{ secrets.key }}
-      # - run: echo $credentials
+      # # Setup key
+      # - run: set -eu
+      # - run: mkdir "$HOME/.ssh"
       - run: echo "${{ secrets.key }}"
-      - name: install modules
-        run: npm install
-      - name: build project
-        run: npm run build
+      - run: echo "$credentials"
+      # - run: chmod 600 "$HOME/.ssh/key"
+      # Build
+      - run: npm install
+      - run: npm run build
+      # Deploy
+      - run: cd dist && rsync -e "ssh -i $credentials -o StrictHostKeyChecking=no" --archive --compress --delete . slava@95.216.141.232:/home/slava/stages/MM/Admin
+      # # Restart
+      # - run: pm2 restart
